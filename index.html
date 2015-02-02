@@ -50,7 +50,7 @@
             transition-timing-function: cubic-bezier(0.770, 0.000, 0.175, 1.000);
         }
 
-        #slides img {
+        #slides ::content img {
             width: 25%;
             float: left;
         }
@@ -100,10 +100,7 @@
         <div id="slides">
             <div id="overflow">
                 <div class="inner">
-                    <img src="images/margaret.jpg">
-                    <img src="images/jud.jpg">
-                    <img src="images/barry-ostroff.jpg">
-                    <img src="images/janice-jones.jpg">
+                    <content select="img"></content>
                 </div>
             </div>
         </div>
@@ -114,14 +111,22 @@
     </div>
 </template>
 
-<div class="container"></div>
+<my-slider>
+    <img src="images/margaret.jpg">
+    <img src="images/jud.jpg">
+    <img src="images/barry-ostroff.jpg">
+    <img src="images/janice-jones.jpg">
+</my-slider>
 
 <script type="text/javascript">
     // Add the template to the Shadow DOM
     var tmpl = document.querySelector('template');
-    var host = document.querySelector('.container');
-    var root = host.createShadowRoot();
-    root.appendChild(document.importNode(tmpl.content, true));
+    var myProto = Object.create(HTMLElement.prototype);
+    myProto.createdCallback = function(){
+        var root = this.createShadowRoot();
+        root.appendChild(document.importNode(tmpl.content, true));
+    }
+    var MySlider = document.registerElement('my-slider', {prototype: myProto});
 </script>
 
 </body>
