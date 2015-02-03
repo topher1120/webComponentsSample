@@ -104,12 +104,16 @@
 </template>
 
 <script type="text/javascript">
-    // Add the template to the Shadow DOM
-    var tmpl = document.querySelector('template');
-    var myProto = Object.create(HTMLElement.prototype);
-    myProto.createdCallback = function(){
-        var root = this.createShadowRoot();
-        root.appendChild(document.importNode(tmpl.content, true));
-    }
-    var MySlider = document.registerElement('my-slider', {prototype: myProto});
+
+    document.onload = function(){
+        // Add the template to the Shadow DOM
+        var tmpl = document.querySelector('template');
+        var myProto = Object.create(HTMLElement.prototype);
+        myProto.createdCallback = function(){
+            var root = this.createShadowRoot();
+            root.appendChild(document.importNode(tmpl.content, true));
+        };
+        var MySlider = document.registerElement('my-slider', {prototype: myProto});
+    };
+
 </script>
